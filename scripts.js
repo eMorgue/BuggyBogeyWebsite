@@ -1,11 +1,9 @@
-const url = 'ws://localhost:8080';
-let socket;
-let reconnectTimeout = 5000;
+const url = 'https://buggy-bogey-5018da91b622.herokuapp.com/:8080';
 const messageQueue = [];
 let gameCode = localStorage.getItem('gameCode') || null;
 let playerNum = localStorage.getItem('playerNum') || null;
 
-socket = new WebSocket(url);
+let socket = new WebSocket(url);
 
 socket.addEventListener('open', () => {
     while (messageQueue.length > 0) {
@@ -21,7 +19,6 @@ socket.addEventListener('open', () => {
 });
 socket.addEventListener('close', () => {
     console.warn('WebSocket closed')
-    setTimeout(connectWebSocket, reconnectTimeout);
 });
 socket.addEventListener('error', (err) => console.error('WebSocket error:', err));
 
