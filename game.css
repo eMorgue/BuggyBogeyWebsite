@@ -1,0 +1,29 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    background-image: url(images/PlaceholderPhoneUI.png);
+    background-position: center center;
+    background-size: auto 100%;
+}
+
+#aim, #shoot {
+    width: 100%;
+    display: block;
+}
+
+#aim {
+    height: 60%;
+}
+
+#shoot {
+    height: 40%;
+}
+
+.input {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
