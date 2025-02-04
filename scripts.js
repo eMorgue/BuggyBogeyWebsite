@@ -14,7 +14,7 @@ socket.addEventListener('open', () => {
     }
         THIS IS INTENDED TO RECONNECT WHEN CONNECTION IS DROPPED UNINTENTIONALLY
         CREATED A LOOP OF RECONNECTING TOO FAST AND BROKE EVERYTHING
-        FIX THIS LATER
+        FIX THIS LATER LIKELY WITH SETTIMEOUT() OR SETINTERVAL()
     */
 });
 socket.addEventListener('close', () => {
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         joinButton.addEventListener('click', () => {
             const enteredCode = gameCodeInput.value.trim();
             if (enteredCode && Number.isInteger(Number(enteredCode)) 
-            && Number(enteredCode) > 99999 && Number(enteredCode) < 1000000) {
+            && Number(enteredCode) > 999 && Number(enteredCode) < 10000) {
                 sendToServer({ type: 'checkgame', code: enteredCode });
             } else {
                 console.warn('Please enter a valid game code.');
