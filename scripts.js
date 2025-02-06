@@ -112,7 +112,7 @@ function sendToServer(message) {
     if (socket.readyState === WebSocket.OPEN) {
         socket.send(jsonMessage);
     } else {
-        messageQueue.push(message);
+        messageQueue.push(jsonMessage);
     }
 }
 
