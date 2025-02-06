@@ -86,11 +86,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function handlePanRight(deltaX) {
         const distancePercent = Math.min(Math.max((deltaX / screenWidth) * 100, -100), 100);
-        sendToServer({ type: 'aim', distance: roundValue(distancePercent), code: gameCode, player: playerNum });
+        sendToServer({ type: 'aim', distance: toString(roundValue(distancePercent)), code: gameCode, player: playerNum });
     }
     function handlePanLeft(deltaX) {
         const distancePercent = Math.min(Math.max((deltaX / screenWidth) * 100, -100), 100);
-        sendToServer({ type: 'aim', distance: roundValue(distancePercent), code: gameCode, player: playerNum });
+        sendToServer({ type: 'aim', distance: toString(roundValue(distancePercent)), code: gameCode, player: playerNum });
     }
 
     if (shootDiv) {
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
         shootHammer.on('panmove', (event) => {deltaY = event.center.y - startY});
         shootHammer.on('panend', () => {
             const distancePercent = Math.min(Math.max((deltaY / screenHeight) * 100, -100), 100);
-            sendToServer({ type: 'shoot', distance: roundValue(distancePercent)*2, code: gameCode, player: playerNum });
+            sendToServer({ type: 'shoot', distance: toString(roundValue(distancePercent)*2), code: gameCode, player: playerNum });
             startY = 0;
         });
     }
