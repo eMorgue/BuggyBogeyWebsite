@@ -30,10 +30,10 @@ socket.addEventListener('message', (event) => {
         if (data.type === 'gamestate') {
             if (data.message === 'valid') {
                 playerNum = data.playerNum;
-                localStorage.setItem("playerNum", playerNum);
+                localStorage.setItem('playerNum', playerNum);
                 gameCode = data.code;
-                localStorage.setItem("gameCode", gameCode);
-                window.location.href = "game.html";
+                localStorage.setItem('gameCode', gameCode);
+                window.location.href = 'game.html';
             }
         }
     } catch (error) {
