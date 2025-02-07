@@ -1,14 +1,14 @@
 const url = 'https://buggy-bogey-5018da91b622.herokuapp.com/:8080';
-const messageQueue = [];
+//const messageQueue = [];
 let gameCode = localStorage.getItem('gameCode') || null;
 let playerNum = localStorage.getItem('playerNum') || null;
 
 let socket = new WebSocket(url);
 
 socket.addEventListener('open', () => {
-    while (messageQueue.length > 0) {
-        socket.send(JSON.stringify(messageQueue.shift()));
-    }
+    //while (messageQueue.length > 0) {
+    //    socket.send(JSON.stringify(messageQueue.shift()));
+    //}
     /*if (gameCode) {
         sendToServer({ type: "checkgame", code: gameCode });
     }
@@ -114,9 +114,9 @@ function sendToServer(message) {
     const jsonMessage = JSON.stringify(message);
     if (socket.readyState === WebSocket.OPEN) {
         socket.send(jsonMessage);
-    } else {
-        messageQueue.push(jsonMessage);
-    }
+    }// else {
+    // messageQueue.push(jsonMessage);
+    //}
 }
 
 function roundValue(value) {
