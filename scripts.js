@@ -73,26 +73,12 @@ document.addEventListener('DOMContentLoaded', () => {
         aimHammer.on('panstart', (event) => {startX = event.center.x});
         aimHammer.on('panmove', (event) => {
             const deltaX = event.center.x - startX;
+            const distancePercent = Math.min(Math.max((deltaX / screenWidth) * 100, -100), 100);
+            const distance =  (roundValue(distancePercent)).toString();
 
-            if (deltaX > 0) {
-                handlePanRight(deltaX);
-            } else if (deltaX < 0) {
-                handlePanLeft(deltaX);
-            }
-            startX = event.center.x;
+            sendToServer({ type: 'aim', distance: distance, code: gameCode, player: playerNum });
         });
         aimHammer.on('panend', () => {startX = 0});
-    }
-
-    function handlePanRight(deltaX) {
-        const distancePercent = Math.min(Math.max((deltaX / screenWidth) * 100, -100), 100);
-        const distance =  (roundValue(distancePercent)).toString();
-        sendToServer({ type: 'aim', distance: distance, code: gameCode, player: playerNum });
-    }
-    function handlePanLeft(deltaX) {
-        const distancePercent = Math.min(Math.max((deltaX / screenWidth) * 100, -100), 100);
-        const distance =  (roundValue(distancePercent)).toString();
-        sendToServer({ type: 'aim', distance: distance, code: gameCode, player: playerNum });
     }
 
     if (shootDiv) {
