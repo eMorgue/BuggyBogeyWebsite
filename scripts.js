@@ -73,6 +73,8 @@ document.addEventListener('DOMContentLoaded', () => {
         aimHammer.on('panstart', (event) => {startX = event.center.x});
         aimHammer.on('panmove', (event) => {
             const deltaX = event.center.x - startX;
+            startX = event.center.x;
+            
             const distancePercent = Math.min(Math.max((deltaX / screenWidth) * 100, -100), 100);
             const distance =  (roundValue(distancePercent)).toString();
 
