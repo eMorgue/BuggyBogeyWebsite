@@ -2,6 +2,7 @@ const url = 'https://buggy-bogey-5018da91b622.herokuapp.com/:8080';
 //const messageQueue = [];
 let gameCode = localStorage.getItem('gameCode') || null;
 let playerNum = localStorage.getItem('playerNum') || null;
+let currentTurn = 0;
 
 let socket = new WebSocket(url);
 
@@ -35,6 +36,9 @@ socket.addEventListener('message', (event) => {
                 localStorage.setItem('gameCode', gameCode);
                 window.location.href = 'game.html';
             }
+        }
+        else if (data.type === 'playernum') {
+            currentTurn = data.num;
         }
     } catch (error) {
         console.error('Invalid JSON received:', event.data);
@@ -78,7 +82,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const distancePercent = Math.min(Math.max((deltaX / screenWidth) * 100, -100), 100);
             const distance =  (roundValue(distancePercent)).toString();
 
-            sendToServer({ type: 'aim', distance: distance, code: gameCode, player: playerNum });
+            if (playerNum === currentTurn) {
+                sendToServer({ type: 'aim', distance: distance, code: gameCode, player: playerNum });
+            }
         });
         aimHammer.on('panend', () => {startX = 0});
     }
@@ -92,7 +98,9 @@ document.addEventListener('DOMContentLoaded', () => {
         shootHammer.on('panend', () => {
             const distancePercent = Math.min(Math.max((deltaY / screenHeight) * 100, -100), 100);
             const distance = (roundValue(distancePercent)*2).toString();
-            sendToServer({ type: 'shoot', distance: distance, code: gameCode, player: playerNum });
+            if (playerNum === currentTurn) {
+                sendToServer({ type: 'shoot', distance: distance, code: gameCode, player: playerNum });
+            }
             startY = 0;
         });
     }
@@ -102,9 +110,7 @@ function sendToServer(message) {
     const jsonMessage = JSON.stringify(message);
     if (socket.readyState === WebSocket.OPEN) {
         socket.send(jsonMessage);
-    }// else {
-    // messageQueue.push(jsonMessage);
-    //}
+    }
 }
 
 function roundValue(value) {
