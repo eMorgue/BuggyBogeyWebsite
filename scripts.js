@@ -2,7 +2,7 @@ const url = 'https://buggy-bogey-5018da91b622.herokuapp.com/:8080';
 //const messageQueue = [];
 let gameCode = localStorage.getItem('gameCode') || null;
 let playerNum = localStorage.getItem('playerNum') || null;
-let currentTurn = 0;
+let currentTurn = 1;
 
 let socket = new WebSocket(url);
 
