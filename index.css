@@ -18,6 +18,7 @@ body
 
 #joinGameButton
 {
-    font-family: "ARCO";
-    background-color: #fdba23;
+    font-family: wingdings;
+
+    color: #fdba23;
 }
