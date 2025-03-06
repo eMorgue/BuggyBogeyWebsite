@@ -19,8 +19,8 @@ body
 #joinGameButton
 {
     /*this is actually ARCO font*/
-    height: 500px;
-    width: 1000px;
+    height: 100%;
+    width: 100%;
     font-family: ARCO;
     background-image: url('images/UI_JoinButton_ON.png');
     background-size: cover;
@@ -33,6 +33,7 @@ body
 #joinGameButton:active
 {
     background-image: url('images/UI_JoinButton_PUSHED.png');
+    
 }
 
 #gameCodeInput
