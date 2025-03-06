@@ -1,0 +1,7 @@
+/*Custom ARCO font*/
+@font-face
+{
+    font-family: "ARCO";
+    src: url('fonts/ARCO.ttf');
+    color: #fdba23;
+}
