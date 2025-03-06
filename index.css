@@ -19,17 +19,17 @@ body
 #joinGameButton
 {
     /*this is actually ARCO font*/
-    font-family: ARCO;
+    /* font-family: ARCO;
     background-image: url('images/UI_JoinButton_ON.png');
     background-size: cover;
     background-repeat: no-repeat;
     border: none;
-    color: transparent;
+    color: transparent; */
 }
 
 #joinGameButton:active
 {
-    background-image: url('images/UI_JoinButton_PUSHED.png');
+    /* background-image: url('images/UI_JoinButton_PUSHED.png'); */
 }
 
 #gameCodeInput
