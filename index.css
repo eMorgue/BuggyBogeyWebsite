@@ -5,3 +5,13 @@
     src: url('fonts/ARCO.ttf');
     color: #fdba23;
 }
+
+body
+{
+    font-family: "ARCO";
+    font-size: 1.5em;
+    color: #fdba23;
+    background-color: #5d9dd3;
+    height: 100%;
+    margin: 0;
+}
