@@ -19,9 +19,12 @@ body
 #joinGameButton
 {
     /*this is actually ARCO font*/
-    font-family: wingdings;
+    font-family: ARCO;
     background-image: url('images/UI_JoinButton_ON.png');
-    color: #fdba23;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: none;
+    color: transparent;
 }
 
 #joinGameButton:active
