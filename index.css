@@ -33,9 +33,9 @@ body
 
 #joinGameButton
 {
-    posistion: relative;
+    posistion: absolute;
     
-   
+    margin-top: 23%;
     width:12%;
     height: 12%;
     font-family: ARCO;
@@ -57,8 +57,9 @@ body
 #gameCodeInput
 {
     /* change the size */
-    position: relative;
-    margin-top: 12.5%;
+    position: absolute;
+    
+    margin-top: 6.5%;
     margin-bottom: 5%;
     width: 12%;
     height: 9%;
