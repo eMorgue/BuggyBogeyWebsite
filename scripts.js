@@ -91,13 +91,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (shootDiv) {
         const shootHammer = new Hammer(shootDiv)
-        shootHammer.get('pan').set({ direction: Hammer.DIRECTION_VERTICAL });
+        shootHammer.get('pan').set({ direction: Hammer.DIRECTION_UP });
     
         shootHammer.on('panstart', (event) => {startY = event.center.y});
         shootHammer.on('panmove', (event) => {deltaY = event.center.y - startY});
         shootHammer.on('panend', () => {
             const distancePercent = Math.min(Math.max((deltaY / screenHeight) * 100, -100), 100);
-            const distance = (roundValue(distancePercent)*67).toString();
+            const distance = (roundValue(distancePercent)*-70).toString();
             
             sendToServer({ type: 'shoot', distance: distance, code: gameCode, player: playerNum });
             
