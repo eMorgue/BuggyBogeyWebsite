@@ -82,25 +82,25 @@ document.addEventListener('DOMContentLoaded', () => {
             const distancePercent = Math.min(Math.max((deltaX / screenWidth) * 100, -100), 100);
             const distance =  (roundValue(distancePercent)).toString();
 
-            //if (playerNum === currentTurn) {
-                sendToServer({ type: 'aim', distance: distance, code: gameCode, player: playerNum });
-            //}
+            
+            sendToServer({ type: 'aim', distance: distance, code: gameCode, player: playerNum });
+            
         });
         aimHammer.on('panend', () => {startX = 0});
     }
 
     if (shootDiv) {
         const shootHammer = new Hammer(shootDiv)
-        shootHammer.get('pan').set({ direction: Hammer.DIRECTION_VERTICAL });
+        shootHammer.get('pan').set({ direction: Hammer.DIRECTION_UP });
     
         shootHammer.on('panstart', (event) => {startY = event.center.y});
         shootHammer.on('panmove', (event) => {deltaY = event.center.y - startY});
         shootHammer.on('panend', () => {
             const distancePercent = Math.min(Math.max((deltaY / screenHeight) * 100, -100), 100);
-            const distance = (roundValue(distancePercent)*2).toString();
-            //if (playerNum === currentTurn) {
-                sendToServer({ type: 'shoot', distance: distance, code: gameCode, player: playerNum });
-            //}
+            const distance = (roundValue(distancePercent)*-70).toString();
+            
+            sendToServer({ type: 'shoot', distance: distance, code: gameCode, player: playerNum });
+            
             startY = 0;
         });
     }
