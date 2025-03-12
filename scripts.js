@@ -116,3 +116,9 @@ function sendToServer(message) {
 function roundValue(value) {
     return Math.round((value + Number.EPSILON) * 1000) / 1000;
 }
+
+setInterval(() => {
+    if (socket.readyState === WebSocket.OPEN) {
+        socket.send(JSON.stringify({ type: 'ping' }));
+    }
+}, 30000);
