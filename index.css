@@ -12,14 +12,32 @@ body
     font-size: 1.5em;
     color: #fdba23;
     background-color: #5d9dd3;
-    height: 100%;
+    background-image: url('images/UI_PhoneJOINscreen_BB-04.png');
+    background-repeat: no-repeat;
+    background-size: 540px 960px;
+    background-position: center center;
+    /* background-size: cover; */
+    
+    height: 100vh;
     margin: 0;
+}
+
+.container
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
 
 #joinGameButton
 {
-    /*this is actually ARCO font*/
+    posistion: absolute;
     
+    margin-top: 400px;
+    width:150px;
+    height: 150px;
     font-family: ARCO;
     background-image: url('images/UI_JoinButton_ON.png');
     background-size: contain;
@@ -38,5 +56,18 @@ body
 
 #gameCodeInput
 {
+    /* change the size */
+    position: absolute;
+    
+    margin-top: 40px;
+    margin-bottom: 10px;
+    width: 190px;
+    height: 65px;
     font-family: ARCO;
+    font-size: 1.25em;
+    background-color: #41327e;
+    color: #fee3af;
+    size: 6em;
+    text-align: center;
+    border: none;
 }
