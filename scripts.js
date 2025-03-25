@@ -34,6 +34,7 @@ socket.addEventListener('message', (event) => {
                 localStorage.setItem('playerNum', playerNum);
                 gameCode = data.code;
                 localStorage.setItem('gameCode', gameCode);
+                document.body.style.backgroundImage = "url('images/UI_Player1Purple.png')";
                 window.location.href = 'game.html';
             }
         }
@@ -82,9 +83,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const distancePercent = Math.min(Math.max((deltaX / screenWidth) * 100, -100), 100);
             const distance =  (roundValue(distancePercent)).toString();
 
-            
-            sendToServer({ type: 'aim', distance: distance, code: gameCode, player: playerNum });
-            
+            if (playerNum === currentTurn) {
+                sendToServer({ type: 'aim', distance: distance, code: gameCode, player: playerNum });
+            }
         });
         aimHammer.on('panend', () => {startX = 0});
     }
@@ -99,8 +100,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const distancePercent = Math.min(Math.max((deltaY / screenHeight) * 100, -100), 100);
             const distance = (roundValue(distancePercent)*-70).toString();
             
-            sendToServer({ type: 'shoot', distance: distance, code: gameCode, player: playerNum });
-            
+            if (playerNum === currentTurn) {
+                sendToServer({ type: 'shoot', distance: distance, code: gameCode, player: playerNum });
+            }
+
             startY = 0;
         });
     }
