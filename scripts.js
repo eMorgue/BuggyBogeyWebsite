@@ -39,6 +39,7 @@ socket.addEventListener('message', (event) => {
             }
         }
         else if (data.type === 'playernum') {
+            console.log("Current Player Number: " + data.num);
             currentTurn = data.num;
         }
     } catch (error) {
