@@ -2,6 +2,7 @@ const url = 'https://buggy-bogey-5018da91b622.herokuapp.com/:8080';
 //const messageQueue = [];
 let gameCode = localStorage.getItem('gameCode') || null;
 let playerNum = localStorage.getItem('playerNum') || null;
+let playerID = localStorage.getItem('playerID') || null;
 let currentTurn = 1;
 
 let socket = new WebSocket(url);
@@ -30,11 +31,14 @@ socket.addEventListener('message', (event) => {
 
         if (data.type === 'gamestate') {
             if (data.message === 'valid') {
+                playerID = data.id;
+                localStorage.setItem('playerID', playerID);
                 playerNum = data.playerNum;
                 localStorage.setItem('playerNum', playerNum);
                 gameCode = data.code;
                 localStorage.setItem('gameCode', gameCode);
-                document.body.style.backgroundImage = "url('images/UI_Player1Purple.png')";
+                console.log(playerID + " " + playerNum + " " + gameCode);
+                // document.body.style.backgroundImage = "url('images/UI_Player1Purple.png')";
                 window.location.href = 'game.html';
             }
         }
@@ -85,6 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const distance =  (roundValue(distancePercent)).toString();
 
             //if (playerNum === currentTurn) {
+                checkConnection();
                 sendToServer({ type: 'aim', distance: distance, code: gameCode, player: playerNum });
             //}
         });
@@ -102,6 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const distance = (roundValue(distancePercent)*-70).toString();
             
             //if (playerNum === currentTurn) {
+                checkConnection();
                 sendToServer({ type: 'shoot', distance: distance, code: gameCode, player: playerNum });
             //}
 
@@ -109,6 +115,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+function checkConnection() {
+    const message = JSON.stringify({type: 'connection', code: gameCode, player: playerNum, id: playerID});
+    sendToServer(message);
+}
 
 function sendToServer(message) {
     const jsonMessage = JSON.stringify(message);
