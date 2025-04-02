@@ -1,5 +1,3 @@
-import { send } from "process";
-
 const url = 'https://buggy-bogey-5018da91b622.herokuapp.com/:8080';
 let gameCode = getCookie('gameCode') || null;
 let playerNum = getCookie('playerNum') || null;
