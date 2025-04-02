@@ -1,50 +1,48 @@
 const url = 'https://buggy-bogey-5018da91b622.herokuapp.com/:8080';
-//const messageQueue = [];
 let gameCode = getCookie('gameCode') || null;
 let playerNum = getCookie('playerNum') || null;
 let playerID = getCookie('playerID') || null;
 let currentTurn = 1;
 
-let socket = new WebSocket(url);
+let socket;
 
-socket.addEventListener('open', () => {
-    //while (messageQueue.length > 0) {
-    //    socket.send(JSON.stringify(messageQueue.shift()));
-    //}
-    /*if (gameCode) {
-        sendToServer({ type: "checkgame", code: gameCode });
-    }
-        THIS IS INTENDED TO RECONNECT WHEN CONNECTION IS DROPPED UNINTENTIONALLY
-        CREATED A LOOP OF RECONNECTING TOO FAST AND BROKE EVERYTHING
-        FIX THIS LATER LIKELY WITH SETTIMEOUT() OR SETINTERVAL()
-    */
-});
-socket.addEventListener('close', () => {
-    console.warn('WebSocket closed')
-});
-socket.addEventListener('error', (err) => console.error('WebSocket error:', err));
+function connectWebSocket() {
+    socket = new WebSocket(url);
 
-socket.addEventListener('message', (event) => {
-    try {
-        const data = JSON.parse(event.data);
-        console.log('Received message:', data);
+    socket.addEventListener('open', () => {
+        console.log('WebSocket connection established');
+    });
 
-        if (data.type === 'gamestate') {
-            if (data.message === 'valid') {
-                setCookie('playerNum', data.playerNum, 1);
-                setCookie('gameCode', data.gameCode, 1);
-                setCookie('playerID', data.playerID, 1);
-                document.body.style.backgroundImage = "url('images/UI_Player1Purple.png')";
-                window.location.href = 'game.html';
+    socket.addEventListener('close', () => {
+        console.warn('WebSocket closed. Reconnecting in 5 seconds...');
+        setTimeout(connectWebSocket, 5000);
+    });
+
+    socket.addEventListener('error', (err) => console.error('WebSocket error:', err));
+
+    socket.addEventListener('message', (event) => {
+        try {
+            const data = JSON.parse(event.data);
+            console.log('Received message:', data);
+
+            if (data.type === 'gamestate') {
+                if (data.message === 'valid') {
+                    setCookie('playerNum', data.playerNum, 1);
+                    setCookie('gameCode', data.gameCode, 1);
+                    setCookie('playerID', data.playerID, 1);
+                    document.body.style.backgroundImage = "url('images/UI_Player1Purple.png')";
+                    window.location.href = 'game.html';
+                }
+            } else if (data.type === 'nextplayer') {
+                currentTurn = data.num;
             }
+        } catch (error) {
+            console.error('Invalid JSON received:', event.data);
         }
-        else if (data.type === 'nextplayer') {
-            currentTurn = data.num;
-        }
-    } catch (error) {
-        console.error('Invalid JSON received:', event.data);
-    }
-});
+    });
+}
+
+connectWebSocket();
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -120,6 +118,7 @@ function roundValue(value) {
     return Math.round((value + Number.EPSILON) * 1000) / 1000;
 }
 
+// Set cookie from W3Schools
 function setCookie(cname, cvalue, exdays) {
     const d = new Date();
     d.setTime(d.getTime() + (exdays*24*60*60*1000));
@@ -127,6 +126,7 @@ function setCookie(cname, cvalue, exdays) {
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
+// Get cookie from W3Schools
 function getCookie(cname) {
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
