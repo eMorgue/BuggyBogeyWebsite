@@ -2,6 +2,7 @@ const url = 'https://buggy-bogey-5018da91b622.herokuapp.com/:8080';
 //const messageQueue = [];
 let gameCode = getCookie('gameCode') || null;
 let playerNum = getCookie('playerNum') || null;
+let playerID = getCookie('playerID') || null;
 let currentTurn = 1;
 
 let socket = new WebSocket(url);
@@ -30,10 +31,9 @@ socket.addEventListener('message', (event) => {
 
         if (data.type === 'gamestate') {
             if (data.message === 'valid') {
-                playerNum = data.playerNum;
-                setCookie('playerNum', playerNum, 1);
-                gameCode = data.code;
-                setCookie('gameCode', gameCode, 1);
+                setCookie('playerNum', data.playerNum, 1);
+                setCookie('gameCode', data.gameCode, 1);
+                setCookie('playerID', data.playerID, 1);
                 document.body.style.backgroundImage = "url('images/UI_Player1Purple.png')";
                 window.location.href = 'game.html';
             }
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const enteredCode = gameCodeInput.value.trim();
             if (enteredCode && Number.isInteger(Number(enteredCode)) 
             && (Number(enteredCode) > 999 && Number(enteredCode) < 10000)) {
-                sendToServer({ type: 'checkgame', code: enteredCode });
+                sendToServer({ type: 'checkgame', gameCode: enteredCode });
             } else {
                 console.warn('Please enter a valid game code. You entered: ', enteredCode);
             }
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const distance =  (roundValue(distancePercent)).toString();
 
             //if (playerNum === currentTurn) {
-                sendToServer({ type: 'aim', distance: distance, code: gameCode, player: playerNum });
+                sendToServer({ type: 'aim', distance: distance, gameCode: gameCode, player: playerNum });
             //}
         });
         aimHammer.on('panend', () => {startX = 0});
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const distance = (roundValue(distancePercent)*-70).toString();
             
             //if (playerNum === currentTurn) {
-                sendToServer({ type: 'shoot', distance: distance, code: gameCode, player: playerNum });
+                sendToServer({ type: 'shoot', distance: distance, gameCode: gameCode, player: playerNum });
             //}
 
             startY = 0;
