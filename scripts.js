@@ -38,7 +38,7 @@ socket.addEventListener('message', (event) => {
                 window.location.href = 'game.html';
             }
         }
-        else if (data.type === 'playernum') {
+        else if (data.type === 'nextplayer') {
             currentTurn = data.num;
         }
     } catch (error) {
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const distance =  (roundValue(distancePercent)).toString();
 
             //if (playerNum === currentTurn) {
-                sendToServer({ type: 'aim', distance: distance, gameCode: gameCode, player: playerNum, playerID: playerID });
+                sendToServer({ type: 'aim', distance: distance, gameCode: gameCode, playerNum: playerNum, playerID: playerID });
             //}
         });
         aimHammer.on('panend', () => {startX = 0});
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const distance = (roundValue(distancePercent)*-70).toString();
             
             //if (playerNum === currentTurn) {
-                sendToServer({ type: 'shoot', distance: distance, gameCode: gameCode, player: playerNum, playerID: playerID });
+                sendToServer({ type: 'shoot', distance: distance, gameCode: gameCode, playerNum: playerNum, playerID: playerID });
             //}
 
             startY = 0;
