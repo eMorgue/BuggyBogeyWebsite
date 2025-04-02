@@ -1,8 +1,7 @@
 const url = 'https://buggy-bogey-5018da91b622.herokuapp.com/:8080';
 //const messageQueue = [];
-let gameCode = localStorage.getItem('gameCode') || null;
-let playerNum = localStorage.getItem('playerNum') || null;
-let playerID = localStorage.getItem('playerID') || null;
+let gameCode = getCookie('gameCode') || null;
+let playerNum = getCookie('playerNum') || null;
 let currentTurn = 1;
 
 let socket = new WebSocket(url);
@@ -31,19 +30,15 @@ socket.addEventListener('message', (event) => {
 
         if (data.type === 'gamestate') {
             if (data.message === 'valid') {
-                playerID = data.id;
-                localStorage.setItem('playerID', playerID);
                 playerNum = data.playerNum;
-                localStorage.setItem('playerNum', playerNum);
+                setCookie('playerNum', playerNum, 1);
                 gameCode = data.code;
-                localStorage.setItem('gameCode', gameCode);
-                console.log(playerID + " " + playerNum + " " + gameCode);
-                // document.body.style.backgroundImage = "url('images/UI_Player1Purple.png')";
+                setCookie('gameCode', gameCode, 1);
+                document.body.style.backgroundImage = "url('images/UI_Player1Purple.png')";
                 window.location.href = 'game.html';
             }
         }
         else if (data.type === 'playernum') {
-            console.log("Current Player Number: " + data.num);
             currentTurn = data.num;
         }
     } catch (error) {
@@ -60,6 +55,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (joinButton && gameCodeInput) {
         joinButton.addEventListener('click', () => {
+            const enteredCode = gameCodeInput.value.trim();
+            if (enteredCode && Number.isInteger(Number(enteredCode)) 
+            && (Number(enteredCode) > 999 && Number(enteredCode) < 10000)) {
+                sendToServer({ type: 'checkgame', code: enteredCode });
             const enteredCode = gameCodeInput.value.trim();
             if (enteredCode && Number.isInteger(Number(enteredCode)) 
             && (Number(enteredCode) > 999 && Number(enteredCode) < 10000)) {
@@ -89,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const distance =  (roundValue(distancePercent)).toString();
 
             //if (playerNum === currentTurn) {
-                checkConnection();
                 sendToServer({ type: 'aim', distance: distance, code: gameCode, player: playerNum });
             //}
         });
@@ -107,7 +105,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const distance = (roundValue(distancePercent)*-70).toString();
             
             //if (playerNum === currentTurn) {
-                checkConnection();
                 sendToServer({ type: 'shoot', distance: distance, code: gameCode, player: playerNum });
             //}
 
@@ -115,11 +112,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-
-function checkConnection() {
-    const message = JSON.stringify({type: 'connection', code: gameCode, player: playerNum, id: playerID});
-    sendToServer(message);
-}
 
 function sendToServer(message) {
     const jsonMessage = JSON.stringify(message);
@@ -132,7 +124,31 @@ function roundValue(value) {
     return Math.round((value + Number.EPSILON) * 1000) / 1000;
 }
 
+function setCookie(cname, cvalue, exdays) {
+    const d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    let expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
 setInterval(() => {
+    console.log(document.cookie);
     if (socket.readyState === WebSocket.OPEN) {
         socket.send(JSON.stringify({ type: 'ping' }));
     }
