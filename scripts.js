@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const distance =  (roundValue(distancePercent)).toString();
 
             //if (playerNum === currentTurn) {
-                sendToServer({ type: 'aim', distance: distance, gameCode: gameCode, player: playerNum });
+                sendToServer({ type: 'aim', distance: distance, gameCode: gameCode, player: playerNum, playerID: playerID });
             //}
         });
         aimHammer.on('panend', () => {startX = 0});
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const distance = (roundValue(distancePercent)*-70).toString();
             
             //if (playerNum === currentTurn) {
-                sendToServer({ type: 'shoot', distance: distance, gameCode: gameCode, player: playerNum });
+                sendToServer({ type: 'shoot', distance: distance, gameCode: gameCode, player: playerNum, playerID: playerID });
             //}
 
             startY = 0;
