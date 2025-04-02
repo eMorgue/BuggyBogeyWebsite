@@ -1,3 +1,5 @@
+import { send } from "process";
+
 const url = 'https://buggy-bogey-5018da91b622.herokuapp.com/:8080';
 let gameCode = getCookie('gameCode') || null;
 let playerNum = getCookie('playerNum') || null;
@@ -35,6 +37,9 @@ function connectWebSocket() {
                 }
             } else if (data.type === 'nextplayer') {
                 currentTurn = data.num;
+            } else if (data.type === 'connection') {
+                console.log('Sending ID check to server with playerID: ', playerID);
+                sendToServer({ type: 'idcheck', playerID: playerID });
             }
         } catch (error) {
             console.error('Invalid JSON received:', event.data);
