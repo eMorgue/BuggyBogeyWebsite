@@ -59,10 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (enteredCode && Number.isInteger(Number(enteredCode)) 
             && (Number(enteredCode) > 999 && Number(enteredCode) < 10000)) {
                 sendToServer({ type: 'checkgame', code: enteredCode });
-            const enteredCode = gameCodeInput.value.trim();
-            if (enteredCode && Number.isInteger(Number(enteredCode)) 
-            && (Number(enteredCode) > 999 && Number(enteredCode) < 10000)) {
-                sendToServer({ type: 'checkgame', code: enteredCode });
             } else {
                 console.warn('Please enter a valid game code. You entered: ', enteredCode);
             }
