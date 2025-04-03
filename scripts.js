@@ -29,7 +29,7 @@ function connectWebSocket() {
                 if (data.message === 'valid') {
                     setCookie('playerNum', data.playerNum, 1);
                     setCookie('gameCode', data.gameCode, 1);
-                    setCookie('playerID', data.playerID, 1);
+                    // setCookie('playerID', data.playerID, 1);
                     document.body.style.backgroundImage = "url('images/UI_Player1Purple.png')";
                     window.location.href = 'game.html';
                 }
@@ -38,6 +38,8 @@ function connectWebSocket() {
             } else if (data.type === 'connection') {
                 console.log('Sending ID check to server with playerID: ', playerID);
                 sendToServer({ type: 'idcheck', playerID: playerID });
+            } else if (data.type === 'id') {
+                setCookie('playerID', data.playerID, 1);
             }
         } catch (error) {
             console.error('Invalid JSON received:', event.data);
@@ -59,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const enteredCode = gameCodeInput.value.trim();
             if (enteredCode && Number.isInteger(Number(enteredCode)) 
             && (Number(enteredCode) > 999 && Number(enteredCode) < 10000)) {
-                sendToServer({ type: 'checkgame', gameCode: enteredCode });
+                sendToServer({ type: 'checkgame', gameCode: enteredCode, playerID: playerID });
             } else {
                 console.warn('Please enter a valid game code. You entered: ', enteredCode);
             }
