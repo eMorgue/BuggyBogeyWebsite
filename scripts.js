@@ -31,7 +31,7 @@ function connectWebSocket() {
                     setCookie('playerNum', data.playerNum, 1);
                     setCookie('gameCode', data.gameCode, 1);
                     // setCookie('playerID', data.playerID, 1);
-                    document.body.style.backgroundImage = "url('images/UI_Player1Purple.png')";
+                    // document.body.style.backgroundImage = "url('images/UI_Player1Purple.png')";
                     window.location.href = 'game.html';
                 }
             } else if (data.type === 'nextplayer') {
@@ -54,6 +54,17 @@ function connectWebSocket() {
 connectWebSocket();
 
 document.addEventListener('DOMContentLoaded', () => {
+    const playerNum = getCookie('playerNum') || 1;
+
+    const backgroundImages = {
+        '1': 'images/UI_Aim1.png',
+        '2': 'images/UI_Aim2.png',
+        '3': 'images/UI_Aim3.png',
+        '4': 'images/UI_Aim4.png'
+    };
+
+    const backgroundImage = backgroundImages[playerNum] || backgroundImages['1'];
+    document.body.style.backgroundImage = "url('" + backgroundImage + "')";
 
     const aimDiv = document.getElementById('aim');
     const shootDiv = document.getElementById('shoot');
