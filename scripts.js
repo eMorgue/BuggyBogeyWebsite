@@ -37,7 +37,7 @@ function connectWebSocket() {
             } else if (data.type === 'nextplayer') {
                 currentTurn = data.num.toString();
             } else if (data.type === 'id') {
-                if (!data.playerID) {
+                if (!playerID) {
                     setCookie('playerID', data.playerID, 1);
                 }
                 else {
