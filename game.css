@@ -12,15 +12,15 @@ html, body {
 }
 
 #aim {
-    height: 30%;
-    background-color: brown;
-    opacity: 0.5;
+    height: 35%;
+    /* background-color: brown;
+    opacity: 0.5; */
 }
 
 #shoot {
-    height: 70%;
-    background-color: blueviolet;
-    opacity: 0.5;
+    height: 65%;
+    /* background-color: blueviolet;
+    opacity: 0.5; */
 }
 
 .input {
