@@ -86,9 +86,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const distancePercent = Math.min(Math.max((deltaX / screenWidth) * 100, -100), 100);
             const distance =  (roundValue(distancePercent)).toString();
 
-            //if (playerNum === currentTurn) {
+            if (playerNum === currentTurn) {
                 sendToServer({ type: 'aim', distance: distance, gameCode: gameCode, playerNum: playerNum, playerID: playerID });
-            //}
+            }
         });
         aimHammer.on('panend', () => {startX = 0});
     }
@@ -103,9 +103,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const distancePercent = Math.min(Math.max((deltaY / screenHeight) * 100, -100), 100);
             const distance = (roundValue(distancePercent)*-70).toString();
             
-            //if (playerNum === currentTurn) {
+            if (playerNum === currentTurn) {
                 sendToServer({ type: 'shoot', distance: distance, gameCode: gameCode, playerNum: playerNum, playerID: playerID });
-            //}
+            }
 
             startY = 0;
         });
