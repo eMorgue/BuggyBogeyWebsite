@@ -64,8 +64,10 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const backgroundImage = backgroundImages[playerNum] || backgroundImages['1'];
-    document.body.style.backgroundImage = "url('" + backgroundImage + "')";
-
+    if (window.location.href.includes('game.html')) {
+        document.body.style.backgroundImage = "url('" + backgroundImage + "')";
+    }
+    
     const aimDiv = document.getElementById('aim');
     const shootDiv = document.getElementById('shoot');
     const joinButton = document.getElementById('joinGameButton');
