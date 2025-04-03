@@ -42,7 +42,7 @@ function connectWebSocket() {
                     setCookie('playerID', playerID, 1);
                 }
                 else {
-                    sendToServer({ type: 'idconfirm', playerID: playerID });
+                    sendToServer({ type: 'idconfirm', playerID: playerID, gameCode: gameCode });
                 }
             }
         } catch (error) {
