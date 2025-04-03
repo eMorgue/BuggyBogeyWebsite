@@ -38,7 +38,8 @@ function connectWebSocket() {
                 currentTurn = data.num.toString();
             } else if (data.type === 'id') {
                 if (playerID === null) {
-                    setCookie('playerID', data.playerID, 1);
+                    playerID = data.playerID;
+                    setCookie('playerID', playerID, 1);
                 }
                 else {
                     sendToServer({ type: 'idconfirm', playerID: playerID });
