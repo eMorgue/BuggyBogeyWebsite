@@ -2,7 +2,7 @@ const url = 'https://buggy-bogey-5018da91b622.herokuapp.com/:8080';
 let gameCode = getCookie('gameCode') || null;
 let playerNum = getCookie('playerNum') || null;
 let playerID = getCookie('playerID') || null;
-let currentTurn = 1;
+let currentTurn = '1';
 
 let socket;
 
@@ -34,7 +34,7 @@ function connectWebSocket() {
                     window.location.href = 'game.html';
                 }
             } else if (data.type === 'nextplayer') {
-                currentTurn = data.num;
+                currentTurn = data.num.toString();
             } else if (data.type === 'connection') {
                 console.log('Sending ID check to server with playerID: ', playerID);
                 sendToServer({ type: 'idcheck', playerID: playerID });
