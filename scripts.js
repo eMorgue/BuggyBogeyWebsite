@@ -11,6 +11,7 @@ function connectWebSocket() {
 
     socket.addEventListener('open', () => {
         console.log('WebSocket connection established');
+        socket.send(JSON.stringify({ type: 'idcheck', playerID: playerID }));
     });
 
     socket.addEventListener('close', () => {
@@ -35,9 +36,6 @@ function connectWebSocket() {
                 }
             } else if (data.type === 'nextplayer') {
                 currentTurn = data.num.toString();
-            } else if (data.type === 'connection') {
-                console.log('Sending ID check to server with playerID: ', playerID);
-                sendToServer({ type: 'idcheck', playerID: playerID });
             } else if (data.type === 'id') {
                 setCookie('playerID', data.playerID, 1);
             }
