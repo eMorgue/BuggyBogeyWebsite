@@ -37,7 +37,12 @@ function connectWebSocket() {
             } else if (data.type === 'nextplayer') {
                 currentTurn = data.num.toString();
             } else if (data.type === 'id') {
-                setCookie('playerID', data.playerID, 1);
+                if (!data.playerID) {
+                    setCookie('playerID', data.playerID, 1);
+                }
+                else {
+                    sendToServer({ type: 'idconfirm', playerID: playerID });
+                }
             }
         } catch (error) {
             console.error('Invalid JSON received:', event.data);
