@@ -13,10 +13,12 @@ html, body {
 
 #aim {
     height: 30%;
+    background-color: brown;
 }
 
 #shoot {
     height: 70%;
+    background-color: blueviolet;
 }
 
 .input {
